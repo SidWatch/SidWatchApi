@@ -1,0 +1,6 @@
+src/packages/
+src/SidWatchApi/bin/
+src/SidWatchApi/obj/
+*.suo
+*.user
+*.config

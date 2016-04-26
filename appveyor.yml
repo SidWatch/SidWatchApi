@@ -1,0 +1,36 @@
+version: 1.0.{build}
+
+before_build:
+  - nuget restore src/SidWatchApi.sln
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "1.0.{build}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+cache:
+  - src/packages -> **\packages.config 
+  
+nuget:
+  account_feed: false
+  project_feed: false
+  disable_publish_on_pr: true
+
+platform: x64
+
+configuration: Debug
+
+build:
+  project: src/SidWatchApi.sln
+  verbosity: Minimal 
+  publish_wap: true
+  
+deploy:
+  - provider: Environment
+    name: TG-WS-02
+    on:
+      branch: master
+      appveyor_repo_tag: true
+      platform: x64
