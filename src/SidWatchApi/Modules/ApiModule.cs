@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using Nancy;
 using Sidwatch.Library.Objects;
@@ -20,6 +21,26 @@ namespace SidWatchApi.Modules
             {
                 BaseResponse br = Authorize(_parameters);
                 return Response.AsSuccess(br);
+            };
+
+            Get["/api/stations"] = _parameters =>
+            {
+                return null;
+            };
+
+            Get["/api/sites"] = _parameters =>
+            {
+                return null;
+            };
+
+            Get["/api/sites/{siteid}/spectrum/latest"] = _parameters =>
+            {
+                return null;
+            };
+
+            Get["/api/sites/{siteid}/spectrum/{start}/{end}"] = _parameters =>
+            {
+                return null;
             };
         }
 
