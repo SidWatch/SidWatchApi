@@ -20,39 +20,22 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK, Version=2.3.52.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
-      <HintPath>..\packages\AWSSDK.2.3.52.0\lib\net45\AWSSDK.dll</HintPath>
+    <Reference Include="AWSSDK, Version=2.3.55.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.2.3.55.0\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HDF.PInvoke, Version=1.8.16.24276, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HDF.PInvoke.1.8.16.9\lib\Net45\HDF.PInvoke.dll</HintPath>
+    <Reference Include="HDF.PInvoke, Version=1.8.16.20170, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HDF.PInvoke.1.8.16.11\lib\Net45\HDF.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MongoDB.Bson, Version=1.10.1.73, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <HintPath>..\packages\mongocsharpdriver.1.10.1\lib\net35\MongoDB.Bson.dll</HintPath>
+    <Reference Include="MongoDB.Bson, Version=1.11.0.92, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.1.11.0\lib\net35\MongoDB.Bson.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MongoDB.Driver, Version=1.10.1.73, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <HintPath>..\packages\mongocsharpdriver.1.10.1\lib\net35\MongoDB.Driver.dll</HintPath>
+    <Reference Include="MongoDB.Driver, Version=1.11.0.92, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.1.11.0\lib\net35\MongoDB.Driver.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Nancy, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -71,12 +54,12 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="sharpHDF, Version=0.8.31.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\sharpHDF.0.8.31.0\lib\net45\sharpHDF.dll</HintPath>
+    <Reference Include="sharpHDF, Version=0.8.33.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\sharpHDF.0.8.33.0\lib\net45\sharpHDF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="swLibrary, Version=1.0.7.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\SidWatch.ServerLibrary.1.0.7.0\lib\net45\swLibrary.dll</HintPath>
+    <Reference Include="swLibrary, Version=1.0.30.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\SidWatch.ServerLibrary.1.0.30\lib\net45\swLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -95,28 +78,28 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="tgAWS, Version=1.0.39.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\TreeGeckoLibraries.AWS.1.0.39.0\lib\net40\tgAWS.dll</HintPath>
+    <Reference Include="tgAWS, Version=1.0.48.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\TreeGeckoLibraries.AWS.1.0.48\lib\net40\tgAWS.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="tgCommonLibrary, Version=1.0.39.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\TreeGeckoLibraries.Common.1.0.39.0\lib\net40\tgCommonLibrary.dll</HintPath>
+    <Reference Include="tgCommonLibrary, Version=1.0.48.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\TreeGeckoLibraries.Common.1.0.48\lib\net40\tgCommonLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="tgGeoframeworks, Version=1.0.39.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\TreeGeckoLibraries.Geospatial.1.0.39.0\lib\net40\tgGeoframeworks.dll</HintPath>
+    <Reference Include="tgGeoframeworks, Version=1.0.48.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\TreeGeckoLibraries.Geospatial.1.0.48\lib\net40\tgGeoframeworks.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="tgLoggly, Version=1.0.39.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\TreeGeckoLibraries.Loggly.1.0.39.0\lib\net45\tgLoggly.dll</HintPath>
+    <Reference Include="tgLoggly, Version=1.0.48.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\TreeGeckoLibraries.Loggly.1.0.48\lib\net45\tgLoggly.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="tgMongo, Version=1.0.39.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\TreeGeckoLibraries.Mongo.1.0.39.0\lib\net40\tgMongo.dll</HintPath>
+    <Reference Include="tgMongo, Version=1.0.48.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\TreeGeckoLibraries.Mongo.1.0.48\lib\net40\tgMongo.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="tgNet, Version=1.0.39.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\TreeGeckoLibraries.Net.1.0.39.0\lib\net40\tgNet.dll</HintPath>
+    <Reference Include="tgNet, Version=1.0.48.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\TreeGeckoLibraries.Net.1.0.48\lib\net40\tgNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -135,20 +118,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper\CustomBootstrapper.cs" />
+    <Compile Include="Extensions\ConversionExtensions.cs" />
     <Compile Include="Extensions\ResponseExtensions.cs" />
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Objects\Position.cs" />
     <Compile Include="Objects\Site.cs" />
     <Compile Include="Objects\Spectrum.cs" />
+    <Compile Include="Objects\Station.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseObjects\AuthorizationResponse.cs" />
     <Compile Include="ResponseObjects\BaseResponse.cs" />
+    <Compile Include="ResponseObjects\GetSitesResponse.cs" />
+    <Compile Include="ResponseObjects\GetStationsResponse.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -176,7 +181,11 @@
 if not exist "$(TargetDir)bin32" md "$(TargetDir)bin32"
 xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.9\lib\native\bin32\*.*" "$(TargetDir)bin32"
 if not exist "$(TargetDir)bin64" md "$(TargetDir)bin64"
-xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.9\lib\native\bin64\*.*" "$(TargetDir)bin64"</PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.9\lib\native\bin64\*.*" "$(TargetDir)bin64"
+if not exist "$(TargetDir)bin32" md "$(TargetDir)bin32"
+xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.11\lib\native\bin32\*.*" "$(TargetDir)bin32"
+if not exist "$(TargetDir)bin64" md "$(TargetDir)bin64"
+xcopy /s /y "$(SolutionDir)packages\HDF.PInvoke.1.8.16.11\lib\native\bin64\*.*" "$(TargetDir)bin64"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

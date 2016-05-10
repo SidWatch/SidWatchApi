@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nancy;
+using SidWatch.Api.ResponseObjects;
 using Sidwatch.Library.Managers;
 using Sidwatch.Library.Objects;
 using SidWatchApi.Extensions;
@@ -59,6 +61,42 @@ namespace SidWatchApi.Modules
             return response;
         }
 
+        private BaseResponse HandleGetSites()
+        {
+            var response = new GetSitesResponse { Success = false };
+            User user;
+
+            if (AuthHelper.IsAuthorized(Request, out user))
+            {
+                SidWatchManager manager = new SidWatchManager();
+
+                List<Site> sites = manager.GetActiveSites();
+                
+                response.Sites = sites.To
+
+
+            }
+
+            return response;
+        }
+
+        private BaseResponse HandleGetStations()
+        {
+            var response = new BaseResponse { Success = false };
+            User user;
+
+            if (AuthHelper.IsAuthorized(Request, out user))
+            {
+                SidWatchManager manager = new SidWatchManager();
+
+                List<Station> stations = manager.GetActiveStations();
+
+
+            }
+
+            return response;
+        }
+
         private BaseResponse HandleFilePost(DynamicDictionary _parameters)
         {
             var response = new BaseResponse { Success = false };
@@ -66,7 +104,7 @@ namespace SidWatchApi.Modules
 
             if (AuthHelper.IsAuthorized(Request, out user))
             {
-                SidwatchManager manager = new SidwatchManager();
+                SidWatchManager manager = new SidWatchManager();
 
                 byte[] fileData = null;
                 string fileName = null;
@@ -84,7 +122,6 @@ namespace SidWatchApi.Modules
                 if (fileName != null)
                 {
                     string fileNoExtension = Path.GetFileNameWithoutExtension(fileName);
-                    Guid imageGuid;
 
                     DateTime dateTime;
 
@@ -96,26 +133,46 @@ namespace SidWatchApi.Modules
                             string bucketName = Config.GetSettingValue("UploadBucket");
 
                             //Store to s3
-                            string siteId = _parameters["siteid"];
-                            string s3Filename = string.Format("/{0}/{1}/{2}/{3}/{4}",
-                                siteId, 
-                                dateTime.Year, 
-                                dateTime.Month, 
-                                dateTime.Day, 
-                                fileName);
+                            string tempSiteId = _parameters["siteid"];
 
-                            S3Helper.PersistFile(bucketName, s3Filename, "binary/octet-stream", fileData);
+                            Guid siteId;
 
-                            //Store record of file locally
+                            if (Guid.TryParse(tempSiteId, out siteId))
+                            {
+                                string s3Filename = string.Format("/{0}/{1}/{2}/{3}/{4}",
+                                    siteId,
+                                    dateTime.Year,
+                                    dateTime.Month,
+                                    dateTime.Day,
+                                    fileName);
 
-                            //Update SiteDay record
+                                //Save the file to s3
+                                S3Helper.PersistFile(bucketName, s3Filename, "binary/octet-stream", fileData);
 
-                            response.Success = true;
-                            return response;
+                                //Store record of file record in db
+                                DataFile dataFile = new DataFile
+                                {
+                                    Active = true,
+                                    Archived = false,
+                                    Available = true,
+                                    Processed = false,
+                                    Filename = s3Filename,
+                                    ParentGuid = siteId
+                                };
+                                manager.Persist(dataFile);
+                                
+                                //Update SiteDay record
+                                
+
+                                response.Success = true;
+                                return response;
+                            }
+
+
                         }
                         catch (Exception ex)
                         {
-                            manager.LogException(user.Guid, ex.ToString());
+                            manager.LogException(user.Guid, ex);
                         }
                     }
                     else
