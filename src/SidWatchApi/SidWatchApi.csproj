@@ -129,6 +129,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseObjects\AuthorizationResponse.cs" />
     <Compile Include="ResponseObjects\BaseResponse.cs" />
+    <Compile Include="ResponseObjects\GetLatestSpectrumResponse.cs" />
     <Compile Include="ResponseObjects\GetSitesResponse.cs" />
     <Compile Include="ResponseObjects\GetStationsResponse.cs" />
   </ItemGroup>

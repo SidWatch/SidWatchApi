@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nancy;
+using SidWatch.Api.Extensions;
 using SidWatch.Api.ResponseObjects;
 using Sidwatch.Library.Managers;
 using Sidwatch.Library.Objects;
@@ -28,12 +29,12 @@ namespace SidWatchApi.Modules
 
             Get["/api/stations"] = _parameters =>
             {
-                return null;
+                return HandleGetStations();
             };
 
             Get["/api/sites"] = _parameters =>
             {
-                return null;
+                return HandleGetSites();
             };
 
             Get["/api/sites/{siteid}/spectrum/latest"] = _parameters =>
@@ -61,6 +62,16 @@ namespace SidWatchApi.Modules
             return response;
         }
 
+        private BaseResponse HandleGetLatestSpectrum(DynamicDictionary _parameters)
+        {
+            var response = new BaseResponse {Success = false};
+            User user;
+
+            if (AuthHelper.IsAuthorized(Request, out user))
+            {
+            }
+        }
+
         private BaseResponse HandleGetSites()
         {
             var response = new GetSitesResponse { Success = false };
@@ -71,10 +82,8 @@ namespace SidWatchApi.Modules
                 SidWatchManager manager = new SidWatchManager();
 
                 List<Site> sites = manager.GetActiveSites();
-                
-                response.Sites = sites.To
-
-
+                response.Sites = sites.ToTransferObjects();
+                response.Success = true;
             }
 
             return response;
@@ -82,7 +91,7 @@ namespace SidWatchApi.Modules
 
         private BaseResponse HandleGetStations()
         {
-            var response = new BaseResponse { Success = false };
+            var response = new GetStationsResponse { Success = false };
             User user;
 
             if (AuthHelper.IsAuthorized(Request, out user))
@@ -90,8 +99,8 @@ namespace SidWatchApi.Modules
                 SidWatchManager manager = new SidWatchManager();
 
                 List<Station> stations = manager.GetActiveStations();
-
-
+                response.Stations = stations.ToTransferObjects();
+                response.Success = true;
             }
 
             return response;
