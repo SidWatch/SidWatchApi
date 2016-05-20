@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nancy;
-using SidWatch.Api.Extensions;
-using SidWatch.Api.ResponseObjects;
 using Sidwatch.Library.Managers;
 using Sidwatch.Library.Objects;
+using SidWatch.Api.Extensions;
+using SidWatch.Api.Objects;
+using SidWatch.Api.ResponseObjects;
 using SidWatchApi.Extensions;
 using SidWatchApi.Helpers;
 using SidWatchApi.ResponseObjects;
 using TreeGecko.Library.AWS.Helpers;
 using TreeGecko.Library.Common.Helpers;
+using Site = Sidwatch.Library.Objects.Site;
+using Station = Sidwatch.Library.Objects.Station;
 
-namespace SidWatchApi.Modules
+namespace SidWatch.Api.Modules
 {
     public class ApiModule : NancyModule
     {
@@ -37,17 +40,19 @@ namespace SidWatchApi.Modules
                 return HandleGetSites();
             };
 
-            Get["/api/sites/{siteid}/spectrum/latest"] = _parameters =>
+            Get["/api/sites/{siteid:guid}/spectrum/latest"] = _parameters =>
             {
-                return null;
+                BaseResponse br = HandleGetLatestSpectrum(_parameters);
+                return br;
             };
 
-            Get["/api/sites/{siteid}/spectrum/{start}/{end}"] = _parameters =>
+            Get["/api/sites/{siteid:guid}/spectrum/{start:datetime}/{end:datetime}"] = _parameters =>
             {
-                return null;
+                BaseResponse br = HandleGetSpectrumRange(_parameters);
+                return br;
             };
 
-            Post["/api/sites/{siteid}/files/{fileName}"] = _parameters =>
+            Post["/api/sites/{siteid:guid}/files/{fileName}"] = _parameters =>
             {
                 BaseResponse br = HandleFilePost(_parameters);
                 return Response.AsSuccess(br);
@@ -62,14 +67,39 @@ namespace SidWatchApi.Modules
             return response;
         }
 
-        private BaseResponse HandleGetLatestSpectrum(DynamicDictionary _parameters)
+        private BaseResponse HandleGetSpectrumRange(DynamicDictionary _parameters)
         {
-            var response = new BaseResponse {Success = false};
+            var response = new GetSiteSpectrumRangeResponse() { Success = false };
             User user;
 
             if (AuthHelper.IsAuthorized(Request, out user))
             {
+                SidWatchManager manager = new SidWatchManager();
+                List<SiteSpectrum> spectrums = manager.GetSiteSpectrums(
+                    _parameters["siteid"], _parameters["start"], _parameters["end"]);
+
+                response.Spectrums = spectrums.ToTransferObjects();
+                response.Success = true;
             }
+
+            return response;
+        }
+
+        private BaseResponse HandleGetLatestSpectrum(DynamicDictionary _parameters)
+        {
+            var response = new GetLatestSpectrumResponse {Success = false};
+            User user;
+
+            if (AuthHelper.IsAuthorized(Request, out user))
+            {
+                SidWatchManager manager = new SidWatchManager();
+                
+                SiteSpectrum spectrum = manager.GetLatestSiteSpectrum(_parameters["siteid"]);
+                response.Spectrum = spectrum.ToTransferObject();
+                response.Success = true;
+            }
+
+            return response;
         }
 
         private BaseResponse HandleGetSites()

@@ -1,4 +1,4 @@
-﻿using Sidwatch.Library.JsonObjects;
+﻿using SidWatch.Api.Objects;
 using SidWatchApi.ResponseObjects;
 
 namespace SidWatch.Api.ResponseObjects
