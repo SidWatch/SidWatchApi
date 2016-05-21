@@ -1,6 +1,8 @@
 version: 1.0.{build}
 
 before_build:
+  - nuget sources Add -Name TreeGecko -Source https://ci.appveyor.com/nuget/libraries-fcn5t1ynwwh0
+  - nuget sources Add -Name SidWatchLibrary - Source https://ci.appveyor.com/nuget/sidwatchserverlibrary-hr8k13yk19aa
   - nuget restore src/SidWatchApi.sln
 
 assembly_info:
