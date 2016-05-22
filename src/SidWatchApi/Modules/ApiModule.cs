@@ -52,7 +52,7 @@ namespace SidWatch.Api.Modules
                 return br;
             };
 
-            Post["/api/sites/{siteid:guid}/files/{fileName}"] = _parameters =>
+            Post["/api/sites/{siteid:guid}/files/{filedatetime:datetime}"] = _parameters =>
             {
                 BaseResponse br = HandleFilePost(_parameters);
                 return Response.AsSuccess(br);
@@ -160,66 +160,47 @@ namespace SidWatch.Api.Modules
 
                 if (fileName != null)
                 {
-                    string fileNoExtension = Path.GetFileNameWithoutExtension(fileName);
 
-                    DateTime dateTime;
+                    DateTime dateTime = _parameters["filedatetime"];
 
-                    if (DateTime.TryParse(fileNoExtension, out dateTime))
+                    try
                     {
+                        string bucketName = Config.GetSettingValue("UploadBucket");
 
-                        try
+                        Guid siteId = (Guid) _parameters["siteid"];
+
+                        string s3Filename = string.Format("/{0}/{1}/{2}/{3}/{4}",
+                            siteId,
+                            dateTime.Year,
+                            dateTime.Month,
+                            dateTime.Day,
+                            fileName);
+
+                        //Save the file to s3
+                        S3Helper.PersistFile(bucketName, s3Filename, "binary/octet-stream", fileData);
+
+                        //Store record of file record in db
+                        DataFile dataFile = new DataFile
                         {
-                            string bucketName = Config.GetSettingValue("UploadBucket");
+                            Active = true,
+                            Archived = false,
+                            Available = true,
+                            Processed = false,
+                            Filename = s3Filename,
+                            ParentGuid = siteId
+                        };
+                        manager.Persist(dataFile);
 
-                            //Store to s3
-                            string tempSiteId = _parameters["siteid"];
+                        //Update SiteDay record
+                        manager.AddFileToSiteDay(siteId, dateTime);
 
-                            Guid siteId;
-
-                            if (Guid.TryParse(tempSiteId, out siteId))
-                            {
-                                string s3Filename = string.Format("/{0}/{1}/{2}/{3}/{4}",
-                                    siteId,
-                                    dateTime.Year,
-                                    dateTime.Month,
-                                    dateTime.Day,
-                                    fileName);
-
-                                //Save the file to s3
-                                S3Helper.PersistFile(bucketName, s3Filename, "binary/octet-stream", fileData);
-
-                                //Store record of file record in db
-                                DataFile dataFile = new DataFile
-                                {
-                                    Active = true,
-                                    Archived = false,
-                                    Available = true,
-                                    Processed = false,
-                                    Filename = s3Filename,
-                                    ParentGuid = siteId
-                                };
-                                manager.Persist(dataFile);
-                                
-                                //Update SiteDay record
-                                
-
-                                response.Success = true;
-                                return response;
-                            }
-
-
-                        }
-                        catch (Exception ex)
-                        {
-                            manager.LogException(user.Guid, ex);
-                        }
+                        response.Success = true;
+                        return response;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        response.Error = "Filename is not in date format";
-                        response.Message = "Send correct date format";
+                        manager.LogException(user.Guid, ex);
                     }
-
                 }
             }
             else
